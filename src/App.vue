@@ -24,15 +24,27 @@ export default {
       itemsHolder: [],
     }
   },
+  created() {
+    const savedItems = localStorage.getItem('itemsHolder');
+    if (savedItems) {
+      this.itemsHolder = JSON.parse(savedItems);
+    }
+  },
   methods: {
     addItems(data) {
       this.itemsHolder.push(data);
+      this.saveToLocalStorage();
     },
     handleRemoveItem(index) {
       this.itemsHolder.splice(index, 1)
+      this.saveToLocalStorage();
     },
     handleEditItem({ index, value }) {
       this.itemsHolder.splice(index, 1, value);
+      this.saveToLocalStorage();
+    },
+    saveToLocalStorage() {
+      localStorage.setItem('itemsHolder', JSON.stringify(this.itemsHolder));
     }
   }
 }
