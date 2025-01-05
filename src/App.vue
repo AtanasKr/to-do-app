@@ -1,26 +1,72 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div class="main-content">
+    <SearchInput @addItems="addItems" />
+    <div class="line-pos">
+      <div class="line">
+      </div>
+    </div>
+    <ItemList :itemsHolder="itemsHolder" @remove-item="handleRemoveItem" @edit-item="handleEditItem" />
+  </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import ItemList from './components/ItemList.vue';
+import SearchInput from './components/SearchInput.vue';
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    SearchInput,
+    ItemList
+  },
+  data() {
+    return {
+      itemsHolder: [],
+    }
+  },
+  methods: {
+    addItems(data) {
+      this.itemsHolder.push(data);
+    },
+    handleRemoveItem(index) {
+      this.itemsHolder.splice(index, 1)
+    },
+    handleEditItem({ index, value }) {
+      this.itemsHolder.splice(index, 1, value);
+    }
   }
 }
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
+
+body {
+  font-family: 'Inter';
+  background-color: #C7FD7A;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.main-content {
+  background-color: rgba(255, 255, 255, 0.5);
+  height: 40em;
+  width: 38em;
+  border-radius: 20px;
+}
+
+.line-pos {
+  padding-top: 1em;
+  display: flex;
+  justify-content: center;
+}
+
+.line {
+  width: 35em;
+  background-color: #C4DB42;
+  height: 0.4em;
+  border-radius: 20px;
 }
 </style>
